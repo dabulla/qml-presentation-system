@@ -1,6 +1,11 @@
+Clock 1.0 Clock.qml
 CodeSlide 1.0 CodeSlide.qml
+ContentColumn 1.0 ContentColumn.qml
+CodeBlock 1.0 CodeBlock.qml
+ProgressIndicator 1.0 ProgressIndicator.qml
+ImageRowSlide 1.0 ImageRowSlide.qml
+ImageStepCompare 1.0 ImageStepCompare.qml
 Presentation 1.0 Presentation.qml
 Slide 1.0 Slide.qml
 SlideCounter 1.0 SlideCounter.qml
-Clock 1.0 Clock.qml
 
