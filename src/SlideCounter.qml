@@ -39,23 +39,31 @@
 **
 ****************************************************************************/
 
-
 import QtQuick 2.0
 
 Text {
-    id: counter;
+    id: counter
+    property int currentSlide: 0
+    property int numberOfSlides: 99
+    property int additionalSlides: 0 // There might be some slides after your "thank you" slide
+    property string startText: "# "
 
     property real fontSize: parent.height * 0.05
-    property real fontScale: 0.5;
+    property real fontScale: 0.5
     property color textColor: parent.textColor != undefined ? parent.textColor : "black"
     property string fontFamily: parent.fontFamily != undefined ? parent.fontFamily : "Helvetica"
 
-    text: "# " + (parent.currentSlide + 1) + " / " + parent.slides.length;
-    color: counter.textColor;
-    font.family: counter.fontFamily;
-    font.pixelSize: fontSize * fontScale;
+    text: startText + (currentSlide + 1) + " / " + (numberOfSlides - additionalSlides)
+    color: counter.textColor
+    font.family: counter.fontFamily
+    font.pixelSize: fontSize * fontScale
 
-    anchors.right: parent.right;
-    anchors.bottom: parent.bottom;
-    anchors.margins: font.pixelSize;
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    anchors.margins: font.pixelSize
+    opacity: currentSlide >= 1 && (currentSlide + 1) <= (numberOfSlides - additionalSlides)
+    Behavior on opacity {
+        NumberAnimation { duration: 500 }
+    }
 }
+
