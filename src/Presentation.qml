@@ -46,6 +46,8 @@ import QtQuick.Window 2.0
 Item {
     id: root
 
+    property bool isPresentation: true
+
     property variant slides: []
     property int currentSlide;
 
@@ -90,10 +92,10 @@ Item {
     function goToNextSlide() {
         root._userNum = 0
         if (_faded)
-            return
+            return true
         if (root.slides[currentSlide].delayPoints) {
             if (root.slides[currentSlide]._advance())
-                return;
+                return true
         }
         if (root.currentSlide + 1 < root.slides.length) {
             var from = slides[currentSlide]
@@ -103,6 +105,11 @@ Item {
                 root.focus = true;
             }
         }
+        else
+        {
+            return false // finished
+        }
+        return true
     }
 
     function goToPreviousSlide() {
@@ -112,6 +119,7 @@ Item {
         if (root.currentSlide - 1 >= 0) {
             var from = slides[currentSlide]
             var to = slides[currentSlide - 1]
+            from.resetSteps();
            if (switchSlides(from, to, false)) {
                 currentSlide = currentSlide - 1;
                root.focus = true;
@@ -153,6 +161,8 @@ Item {
                 goToPreviousSlide();
             else if (event.key == Qt.Key_C)
                 root._faded = !root._faded;
+            else if (event.key == Qt.Key_F)
+                theAppWnd.visibility = theAppWnd.visibility === Window.FullScreen ? "Windowed" : "FullScreen";
             _userNum = 0;
         }
     }
@@ -175,7 +185,7 @@ Item {
             else
                 goToNextSlide()
         }
-        onPressAndHold: goToPreviousSlide(); //A back mechanism for touch only devices
+        //onPressAndHold: goToPreviousSlide(); //A back mechanism for touch only devices. TODO: Sometimes invokes accidently when trying to proceed to next slide
     }
 
     Window {
@@ -186,61 +196,16 @@ Item {
         title: "QML Presentation: Notes"
         visible: root.showNotes
 
-        Flickable {
+        Text {
             anchors.fill: parent
-            contentWidth: parent.width
-            contentHeight: textContainer.height
+            anchors.margins: parent.height * 0.1;
 
-            Item {
-                id: textContainer
-                width: parent.width
-                height: notesText.height + 2 * notesText.padding
+            font.pixelSize: 16
+            wrapMode: Text.WordWrap
 
-                Text {
-                    id: notesText
-
-                    property real padding: 16;
-
-                    x: padding
-                    y: padding
-                    width: parent.width - 2 * padding
-
-
-                    font.pixelSize: 16
-                    wrapMode: Text.WordWrap
-
-                    property string notes: root.slides[root.currentSlide].notes;
-
-                    onNotesChanged: {
-                        var result = "";
-
-                        var lines = notes.split("\n");
-                        var beginNewLine = false
-                        for (var i=0; i<lines.length; ++i) {
-                            var line = lines[i].trim();
-                            if (line.length == 0) {
-                                beginNewLine = true;
-                            } else {
-                                if (beginNewLine && result.length) {
-                                    result += "\n\n"
-                                    beginNewLine = false
-                                }
-                                if (result.length > 0)
-                                    result += " ";
-                                result += line;
-                            }
-                        }
-
-                        if (result.length == 0) {
-                            font.italic = true;
-                            text = "no notes.."
-                        } else {
-                            font.italic = false;
-                            text = result;
-                        }
-                    }
-                }
-            }
+            property string notes: root.slides[root.currentSlide].notes;
+            text: notes == "" ? "Slide has no notes..." : notes;
+            font.italic: notes == "";
         }
     }
 }

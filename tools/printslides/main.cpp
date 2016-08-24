@@ -42,6 +42,8 @@
 
 #include <QtGui>
 #include "slideview.h"
+#include <QQmlContext>
+#include <QQuickItem>
 
 /** PrintSlides main program.
     A program to print qt-labs qml-presentation-system Presentations.
@@ -65,6 +67,8 @@ int main (int argc, char* argv[]) {
             progName.toLocal8Bit().constData());
         return 2;
     }
+    mainView.rootContext()->setContextProperty("isPrinting", true);
+    mainView.setResizeMode(QQuickView::SizeViewToRootObject);
     mainView.setSource(app.arguments()[1]);
     mainView.show();
     return app.exec();

@@ -60,12 +60,14 @@ public slots:
     void updateStatus(QQuickView::Status);
     void timerEvent(QTimerEvent* evt);
     void printCurrentSlide();
-    void goToNextSlide();
+    bool goToNextSlide();
 
 private:
     int m_slidesLeft;
     int m_printedSlides;
     int m_tid;
+    bool m_isFinished;
+    bool m_printCurrentSlide;
 
     QPrinter m_printer;
     QPainter m_painter;

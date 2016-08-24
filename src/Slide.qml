@@ -53,16 +53,44 @@ Item {
     property bool isSlide: true;
 
     property bool delayPoints: false;
-    property int _pointCounter: 0;
+    property bool showAllPoints: false; // for steps
+    property int _pointCounter: showAllPoints ? content.length-1 : 0;
+
+    property int currentStep: 0
+    property int currentBullet: 0
+
+    //returns false if the next slide can show
     function _advance() {
         if (!parent.allowDelay)
             return false;
-
+        if(advanceStep()) {
+            currentStep++;
+            return true;
+        }
+        currentStep = 0;
         _pointCounter = _pointCounter + 1;
+        currentBullet = _pointCounter;
         if (_pointCounter < content.length)
             return true;
-        _pointCounter = 0;
+        _pointCounter = showAllPoints ? content.length-1 : 0;
+        currentBullet = 0;
         return false;
+    }
+
+    //returns false if the next bullet should show. Meant to be overridden
+    function advanceStep() {
+        return false;
+    }
+
+    // when printing, this is called for each bullet-point/step.
+    // return true if the slide should be printed out in it's current form.
+    // Meant to be overridden. Default behaviour: print only when all bullets are shown
+    function shouldPrint() { return _pointCounter == content.length-1 || delayPoints === false || (delayPoints === true && showAllPoints); }
+
+    function resetSteps() {
+        currentStep = 0;
+        _pointCounter = showAllPoints ? content.length-1 : 0;
+        currentBullet = _pointCounter;
     }
 
     property string title;
@@ -77,6 +105,8 @@ Item {
     property real baseFontSize: fontSize * fontScale
     property real titleFontSize: fontSize * 1.2 * fontScale
     property real bulletSpacing: 1
+    property bool showBullets: true
+    property real bulletScale: 1
 
     property real contentWidth: width
 
@@ -167,18 +197,19 @@ Item {
 
                 Rectangle {
                     id: dot
-                    anchors.baseline: text.baseline
-                    anchors.baselineOffset: -text.font.pixelSize / 2
-                    width: text.font.pixelSize / 3
-                    height: text.font.pixelSize / 3
+                    y: baseFontSize * row.indentFactor / 2
+                    width: baseFontSize / 4 * slide.bulletScale
+                    height: baseFontSize / 4 * slide.bulletScale
                     color: slide.textColor
                     radius: width / 2
-                    opacity: text.text.length == 0 ? 0 : 1
+                    smooth: true
+                    opacity: text.text.length == 0 ? 0 : slide.showBullets ? 1 : 0
+
                 }
 
                 Item {
                     id: space
-                    width: dot.width * 1.5
+                    width: dot.width * 2
                     height: 1
                 }
 
@@ -186,7 +217,7 @@ Item {
                     id: text
                     width: slide.contentWidth - parent.x - dot.width - space.width
                     font.pixelSize: baseFontSize * row.indentFactor
-                    text: content[index]
+                    text: content[index].substring(indentLevel)
                     textFormat: slide.textFormat
                     wrapMode: Text.WordWrap
                     color: slide.textColor
