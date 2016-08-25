@@ -6,6 +6,7 @@ QML_FILES = \
     ContentColumn.qml \
     CodeBlock.qml \
     ProgressIndicator.qml \
+    ProgressIndicatorRect.qml \
     ImageRowSlide.qml \
     ImageStepCompare.qml \
     Presentation.qml \
