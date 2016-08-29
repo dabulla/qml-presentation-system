@@ -11,7 +11,7 @@ Item {
     property int currentSlide
 
     property real radius: 7
-    property bool showText: false
+    property bool showText: true
     onCurrentSlideChanged: {
         var slide = slides[currentSlide];
         for (var index = 0; index < sections.length; ++index) {

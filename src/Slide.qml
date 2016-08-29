@@ -198,8 +198,8 @@ Item {
                 Rectangle {
                     id: dot
                     y: baseFontSize * row.indentFactor / 2
-                    width: baseFontSize / 4 * slide.bulletScale
-                    height: baseFontSize / 4 * slide.bulletScale
+                    width: baseFontSize / 3 * slide.bulletScale
+                    height: baseFontSize / 3 * slide.bulletScale
                     color: slide.textColor
                     radius: width / 2
                     smooth: true

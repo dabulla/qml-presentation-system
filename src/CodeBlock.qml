@@ -18,21 +18,21 @@ Rectangle {
         border.width: parent.border.width;
         antialiasing: true
         radius: parent.radius;
-        color: "black"
+        color: "white"
         Text {
             x: parent.width*0.01
             id: titleText
             text: title
             font.pixelSize: codeBlock.codeFontSize
-            color: textColor
+            color: codeBlock.textColor
             horizontalAlignment: Text.AlignHCenter
         }
     }
 
     radius: height / 100;
     gradient: Gradient {
-        GradientStop { position: 0; color: Qt.rgba(0.0, 0.0, 0.0, 1.0); }
-        GradientStop { position: 1; color: Qt.rgba(0.2, 0.2, 0.2, 1.0); }
+        GradientStop { position: 0; color: Qt.rgba(1.0, 1.0, 1.0, 1.0); }
+        GradientStop { position: 1; color: Qt.rgba(0.8, 0.8, 0.8, 1.0); }
     }
     border.color: Qt.rgba(0, 177, 172)
     border.width: height / 250;
@@ -92,13 +92,13 @@ Rectangle {
 
             Text {
                 id: lineLabel
-                anchors.right: lineLabelBackground.right;
+                anchors.right: lineLabelBackground.right
                 text: (line+1) + ":"
                 color: codeBlock.textColor;
                 font.family: codeBlock.codeFontFamily
                 font.pixelSize: codeBlock.codeFontSize
-                font.bold: itemDelegate.ListView.isCurrentItem;
-                opacity: itemDelegate.ListView.isCurrentItem ? 1 : 0.9;
+                font.bold: itemDelegate.ListView.isCurrentItem
+                opacity: itemDelegate.ListView.isCurrentItem ? 1 : 0.9
 
             }
 
@@ -125,7 +125,4 @@ Rectangle {
             }
         }
     }
-
-
-
 }
