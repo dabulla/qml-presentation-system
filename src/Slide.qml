@@ -92,6 +92,9 @@ Item {
         _pointCounter = showAllPoints ? content.length-1 : 0;
         currentBullet = _pointCounter;
     }
+    property bool initialized: false
+    function initSlide() {}
+    function resetSlide() {}
 
     property string title;
     property variant content: []

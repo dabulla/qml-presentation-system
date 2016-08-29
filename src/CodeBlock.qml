@@ -7,9 +7,10 @@ Rectangle {
     property string code
     property string title
     property real codeFontSize: Math.max(parent.height*0.03, 1.0)
-    property string textColor: "white"
+    property string textColor: "black"
 
     Rectangle {
+        visible: title.length > 0
         anchors.right: parent.right
         anchors.top: parent.top
         height: titleText.implicitHeight
@@ -34,7 +35,7 @@ Rectangle {
         GradientStop { position: 0; color: Qt.rgba(1.0, 1.0, 1.0, 1.0); }
         GradientStop { position: 1; color: Qt.rgba(0.8, 0.8, 0.8, 1.0); }
     }
-    border.color: Qt.rgba(0, 177, 172)
+    border.color: Qt.rgba(0, 0.5, 0.5)
     border.width: height / 250;
     antialiasing: true
 
