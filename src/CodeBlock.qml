@@ -8,6 +8,7 @@ Rectangle {
     property string title
     property real codeFontSize: Math.max(parent.height*0.03, 1.0)
     property string textColor: "white"
+    property alias selectedLine: listView.currentIndex
 
     Rectangle {
         anchors.right: parent.right
