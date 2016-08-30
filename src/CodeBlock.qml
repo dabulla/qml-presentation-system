@@ -11,6 +11,7 @@ Rectangle {
     property alias selectedLine: listView.currentIndex
 
     Rectangle {
+        visible: title.length > 0
         anchors.right: parent.right
         anchors.top: parent.top
         height: titleText.implicitHeight
@@ -35,7 +36,7 @@ Rectangle {
         GradientStop { position: 0; color: Qt.rgba(1.0, 1.0, 1.0, 1.0); }
         GradientStop { position: 1; color: Qt.rgba(0.8, 0.8, 0.8, 1.0); }
     }
-    border.color: Qt.rgba(0, 177, 172)
+    border.color: Qt.rgba(0, 0.5, 0.5)
     border.width: height / 250;
     antialiasing: true
 

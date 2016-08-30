@@ -84,6 +84,9 @@ Item {
     }
 
     function switchSlides(from, to, forward) {
+        from.resetSlide()
+        if(!to.initialized)
+            to.initSlide()
         from.visible = false
         to.visible = true
         return true
@@ -100,8 +103,9 @@ Item {
         if (root.currentSlide + 1 < root.slides.length) {
             var from = slides[currentSlide]
             var to = slides[currentSlide + 1]
+            to.initSlide()
             if (switchSlides(from, to, true)) {
-                currentSlide = currentSlide + 1;
+                currentSlide = currentSlide + 1
                 root.focus = true;
             }
         }
@@ -119,9 +123,9 @@ Item {
         if (root.currentSlide - 1 >= 0) {
             var from = slides[currentSlide]
             var to = slides[currentSlide - 1]
-            from.resetSteps();
+            from.resetSteps()
            if (switchSlides(from, to, false)) {
-                currentSlide = currentSlide - 1;
+                currentSlide = currentSlide - 1
                root.focus = true;
            }
         }
@@ -136,6 +140,7 @@ Item {
         else if (root.currentSlide != _userNum) {
             var from = slides[currentSlide]
             var to = slides[_userNum]
+            from.resetSteps()
            if (switchSlides(from, to, _userNum > currentSlide)) {
                 currentSlide = _userNum;
                root.focus = true;
@@ -162,7 +167,7 @@ Item {
             else if (event.key == Qt.Key_C)
                 root._faded = !root._faded;
             else if (event.key == Qt.Key_F)
-                theAppWnd.visibility = theAppWnd.visibility === Window.FullScreen ? "Windowed" : "FullScreen";
+                root.parent.visibility = theAppWnd.visibility === Window.FullScreen ? "Windowed" : "FullScreen";
             _userNum = 0;
         }
     }
