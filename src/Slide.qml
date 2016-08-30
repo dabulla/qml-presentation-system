@@ -197,7 +197,9 @@ Item {
 
                 Rectangle {
                     id: dot
-                    y: baseFontSize * row.indentFactor / 2
+                    //y: baseFontSize * row.indentFactor / 2
+                    anchors.baseline: text.baseline
+                    anchors.baselineOffset: -text.font.pixelSize / 2
                     width: baseFontSize / 3 * slide.bulletScale
                     height: baseFontSize / 3 * slide.bulletScale
                     color: slide.textColor

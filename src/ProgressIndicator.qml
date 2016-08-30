@@ -12,6 +12,9 @@ Item {
 
     property real radius: 7
     property bool showText: true
+    property color colorPrevious: "darkGrey"
+    property color colorCurrent: "black"
+    property color colorNext: "grey"
     onCurrentSlideChanged: {
         var slide = slides[currentSlide];
         for (var index = 0; index < sections.length; ++index) {
@@ -41,13 +44,13 @@ Item {
                                 height: width
                                 radius: root.radius
                                 color: sliderRepeater.model[index] === root.slides[currentSlide]
-                                            ? "black"
+                                            ? root.colorCurrent
                                             : slideFlow.sectionIndex < currentSection
-                                                ? "grey"
+                                                ? root.colorPrevious
                                                 : slideFlow.sectionIndex > currentSection
-                                                    ? "lightGrey"
+                                                    ? root.colorNext
                                                     : index < currentItem
-                                                        ? "grey" : "lightGrey"
+                                                        ? root.colorPrevious : root.colorNext
                             }
                         }
                     }
